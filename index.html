@@ -2095,6 +2095,273 @@ td.deal-result { font-weight: 500; }
   border-color: var(--forest);
 }
 
+/* Preset button — active selection state */
+.preset-btn.active {
+  background: var(--oxblood);
+  color: var(--paper);
+  border-color: var(--oxblood);
+  position: relative;
+}
+.preset-btn.active::before {
+  content: '✓';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 9px;
+  color: var(--paper);
+  font-weight: 700;
+}
+.preset-btn.active {
+  padding-left: 20px;
+}
+
+/* Recent-change pulse — fields that just changed get a brief highlight */
+@keyframes fieldPulse {
+  0%   { background: rgba(143, 106, 31, 0.20); }
+  100% { background: transparent; }
+}
+.field-changed input,
+.field-changed .display-value,
+.field-changed .check-label {
+  animation: fieldPulse 1.6s ease-out;
+}
+
+/* Tooltip system */
+[data-tooltip] {
+  cursor: help;
+  border-bottom: 1px dotted var(--ink-faint);
+  position: relative;
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: var(--paper);
+  padding: 6px 10px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  white-space: normal;
+  width: 220px;
+  text-align: left;
+  line-height: 1.45;
+  border: 1px solid var(--gold);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s 0.3s ease-out;
+}
+[data-tooltip]:hover::after {
+  opacity: 1;
+}
+[data-tooltip]::before {
+  content: '';
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0; height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid var(--ink);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s 0.3s ease-out;
+}
+[data-tooltip]:hover::before { opacity: 1; }
+
+/* Sortable table headers */
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: color 0.15s;
+}
+th.sortable:hover { color: var(--oxblood); }
+th.sortable::after {
+  content: ' ⇅';
+  font-size: 9px;
+  color: var(--ink-faint);
+  opacity: 0.5;
+}
+th.sortable.asc::after  { content: ' ↑'; color: var(--oxblood); opacity: 1; }
+th.sortable.desc::after { content: ' ↓'; color: var(--oxblood); opacity: 1; }
+
+/* Saved scenarios drawer */
+.scenarios-drawer {
+  position: fixed;
+  top: 0; right: 0;
+  width: 360px; height: 100vh;
+  background: var(--paper);
+  border-left: 2px solid var(--ink);
+  box-shadow: -8px 0 24px rgba(28,26,23,0.12);
+  transform: translateX(100%);
+  transition: transform 0.25s ease-out;
+  z-index: 200;
+  padding: 28px 24px;
+  overflow-y: auto;
+}
+.scenarios-drawer.open {
+  transform: translateX(0);
+}
+.scenarios-drawer h3 {
+  margin: 0 0 4px 0;
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink);
+}
+.scenarios-drawer .sub {
+  font-size: 11px;
+  color: var(--ink-faint);
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.scenarios-drawer-close {
+  position: absolute;
+  top: 14px; right: 18px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: var(--ink-mid);
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+.scenarios-drawer-close:hover { color: var(--oxblood); }
+.scenario-item {
+  padding: 12px 14px;
+  border: 1px solid var(--rule);
+  background: var(--vellum);
+  margin-bottom: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.scenario-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 11px;
+  flex: 1;
+}
+.scenario-item-info strong {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--ink);
+}
+.scenario-item-meta {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-faint);
+}
+.scenario-item-actions {
+  display: flex;
+  gap: 4px;
+}
+.scenario-item-actions button {
+  padding: 4px 8px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  color: var(--ink-mid);
+  cursor: pointer;
+}
+.scenario-item-actions button:hover { background: var(--ink); color: var(--paper); }
+.scenario-item-actions .del:hover { background: var(--oxblood); color: var(--paper); }
+.save-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.save-row input {
+  flex: 1;
+  padding: 8px 10px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  background: var(--vellum);
+  border: 1px solid var(--rule);
+}
+.save-row button {
+  padding: 8px 14px;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--forest);
+  color: var(--paper);
+  border: 1px solid var(--forest);
+  cursor: pointer;
+}
+.scenarios-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(28,26,23,0.35);
+  z-index: 199;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+.scenarios-drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Print stylesheet */
+@media print {
+  @page { margin: 12mm; size: A4 portrait; }
+  body {
+    background: white;
+    color: black;
+    font-size: 10pt;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .paper-grain, .scenarios-drawer, .scenarios-drawer-backdrop { display: none !important; }
+  .masthead { page-break-after: avoid; }
+  .tabs, .scenario-controls, .mode-flags-row, .btn-row, .deal-action-btn, .preset-btn,
+  #recalc-btn, #reset-btn, .toggle-pill, .template-chip, .scn-controls,
+  #mc-run, #scn-recompute, .scenarios-drawer-close, .bench-control button,
+  .lp-class-toggle, [data-tooltip]::after, [data-tooltip]::before {
+    display: none !important;
+  }
+  .panel { display: block !important; page-break-before: always; padding: 12pt 0; }
+  .panel:first-of-type { page-break-before: avoid; }
+  .kpi-band { page-break-after: avoid; }
+  .kpi { break-inside: avoid; }
+  table, .sum-card, .bench-block, .ilpa-card, .termsheet-wrap { break-inside: avoid; }
+  .chart-wrap { max-height: 280px; }
+  input, select, textarea { border: none !important; background: transparent !important; }
+  .data-table-wrap { overflow: visible !important; }
+  /* Print header */
+  body::before {
+    content: 'FOLIO. — PE Fund Model · Printed ' attr(data-print-date);
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 8pt;
+    color: #666;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 4pt;
+    margin-bottom: 8pt;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2142,9 +2409,9 @@ td.deal-result { font-weight: 500; }
     </div>
     <div class="scenario-controls">
       <span>Scenario</span>
-      <button class="pill" id="scn-save">Save</button>
-      <button class="pill" id="scn-export">Export</button>
-      <button class="pill" id="scn-print">Print</button>
+      <button class="pill" id="scn-save" title="Save & manage scenarios (localStorage)">Scenarios</button>
+      <button class="pill" id="scn-export" title="Export current state as JSON file">Export JSON</button>
+      <button class="pill" id="scn-print" title="Print or save as PDF">Print</button>
     </div>
   </div>
 
@@ -2159,7 +2426,7 @@ td.deal-result { font-weight: 500; }
 
     <div class="kpi" data-kpi="moic">
       <div class="kpi-corner"><span class="kpi-corner-num">i.</span>MULT</div>
-      <div class="kpi-label">Net LP MOIC</div>
+      <div class="kpi-label"><span data-tooltip="Multiple Of Invested Capital — total dollars returned to LPs divided by total dollars called. 2.0x means LPs got back twice what they put in. Net is after fees and carry.">Net LP MOIC</span></div>
       <div class="kpi-value" id="kpi-moic">&mdash;</div>
       <div class="kpi-sub" id="kpi-moic-sub">After fees &amp; carry</div>
       <div class="kpi-foot">
@@ -2174,7 +2441,7 @@ td.deal-result { font-weight: 500; }
 
     <div class="kpi" data-kpi="irr">
       <div class="kpi-corner"><span class="kpi-corner-num">ii.</span>RATE</div>
-      <div class="kpi-label">Net LP IRR</div>
+      <div class="kpi-label"><span data-tooltip="Internal Rate of Return — annualized yield on LP cash flows. Time-weighted, so an early distribution counts more than a late one. 'Net' means after all fund costs.">Net LP IRR</span></div>
       <div class="kpi-value" id="kpi-irr">&mdash;</div>
       <div class="kpi-sub" id="kpi-irr-sub">&mdash;</div>
       <div class="kpi-foot">
@@ -2189,7 +2456,7 @@ td.deal-result { font-weight: 500; }
 
     <div class="kpi" data-kpi="dpi">
       <div class="kpi-corner"><span class="kpi-corner-num">iii.</span>DPI</div>
-      <div class="kpi-label">DPI &middot; TVPI</div>
+      <div class="kpi-label"><span data-tooltip="DPI = Distributions ÷ Paid-In capital (cash back). TVPI = Total Value ÷ Paid-In (cash plus NAV). DPI ≥ 1.0x means LPs got their money back; TVPI ≥ 1.0x means total value exceeds capital invested.">DPI &middot; TVPI</span></div>
       <div class="kpi-value" id="kpi-dpi">&mdash;</div>
       <div class="kpi-sub" id="kpi-dpi-sub">&mdash;</div>
       <div class="kpi-foot">
@@ -2204,7 +2471,7 @@ td.deal-result { font-weight: 500; }
 
     <div class="kpi" data-kpi="carry">
       <div class="kpi-corner"><span class="kpi-corner-num">iv.</span>GP</div>
-      <div class="kpi-label">GP Carry $</div>
+      <div class="kpi-label"><span data-tooltip="Total carried interest paid to the GP, in dollars. Carry is the GP's share of profits above the preferred return — typically 20%.">GP Carry $</span></div>
       <div class="kpi-value" id="kpi-carry">&mdash;</div>
       <div class="kpi-sub" id="kpi-carry-sub">&mdash;</div>
       <div class="kpi-foot">
@@ -2219,7 +2486,7 @@ td.deal-result { font-weight: 500; }
 
     <div class="kpi" data-kpi="fees">
       <div class="kpi-corner"><span class="kpi-corner-num">v.</span>FEE</div>
-      <div class="kpi-label">Net Mgmt Fees</div>
+      <div class="kpi-label"><span data-tooltip="Total management fees collected, net of any transaction fee offsets. Fees are a drag on LP returns — lower is better from the LP perspective.">Net Mgmt Fees</span></div>
       <div class="kpi-value" id="kpi-fees">&mdash;</div>
       <div class="kpi-sub" id="kpi-fees-sub">&mdash;</div>
       <div class="kpi-foot">
@@ -2270,11 +2537,11 @@ td.deal-result { font-weight: 500; }
     <button class="btn" id="recalc-btn">Recalculate</button>
     <button class="btn btn-secondary" id="reset-btn">Reset Defaults</button>
     <div class="btn-divider"></div>
-    <button class="btn btn-secondary btn-small" id="preset-conservative">Conservative LP</button>
-    <button class="btn btn-secondary btn-small" id="preset-sponsor">Sponsor-Friendly</button>
-    <button class="btn btn-secondary btn-small" id="preset-pe">PE Mid-Market</button>
-    <button class="btn btn-secondary btn-small" id="preset-vc">Venture</button>
-    <button class="btn btn-secondary btn-small" id="preset-credit">Private Credit</button>
+    <button class="btn btn-secondary btn-small preset-btn" data-preset="conservative" id="preset-conservative">Conservative LP</button>
+    <button class="btn btn-secondary btn-small preset-btn" data-preset="sponsor" id="preset-sponsor">Sponsor-Friendly</button>
+    <button class="btn btn-secondary btn-small preset-btn" data-preset="pe" id="preset-pe">PE Mid-Market</button>
+    <button class="btn btn-secondary btn-small preset-btn" data-preset="vc" id="preset-vc">Venture</button>
+    <button class="btn btn-secondary btn-small preset-btn" data-preset="credit" id="preset-credit">Private Credit</button>
   </div>
 
   <div class="input-grid">
@@ -2848,6 +3115,8 @@ td.deal-result { font-weight: 500; }
     <button class="btn btn-secondary btn-small" id="pf-zero">Set All to 1x</button>
     <button class="btn btn-secondary btn-small" id="pf-double">Double Up</button>
     <button class="btn btn-secondary btn-small" id="pf-haircut">−20% Haircut</button>
+    <span style="flex:1;"></span>
+    <button class="btn btn-secondary btn-small" id="pf-csv">⇩ Export CSV</button>
   </div>
 
   <div class="table-wrap">
@@ -2859,14 +3128,14 @@ td.deal-result { font-weight: 500; }
       <thead>
         <tr>
           <th>#</th>
-          <th>Deal</th>
-          <th>Sector</th>
-          <th class="num">Entry</th>
-          <th class="num">Exit</th>
-          <th class="num">Hold</th>
-          <th class="num">Invested</th>
-          <th class="num">MOIC</th>
-          <th class="num">Proceeds</th>
+          <th class="sortable" data-sort="name">Deal</th>
+          <th class="sortable" data-sort="sector">Sector</th>
+          <th class="num sortable" data-sort="investYear">Entry</th>
+          <th class="num sortable" data-sort="exitYear">Exit</th>
+          <th class="num sortable" data-sort="hold">Hold</th>
+          <th class="num sortable" data-sort="invested">Invested</th>
+          <th class="num sortable" data-sort="moic">MOIC</th>
+          <th class="num sortable" data-sort="proceeds">Proceeds</th>
           <th class="num">LP $</th>
           <th class="num">GP Carry</th>
           <th></th>
@@ -2977,42 +3246,42 @@ td.deal-result { font-weight: 500; }
 
   <div class="metrics-strip">
     <div class="metric-cell">
-      <div class="metric-label">PIC</div>
+      <div class="metric-label"><span data-tooltip="Paid-In Capital ratio — cumulative called ÷ committed. Approaches 1.0x as the fund draws down its commitment.">PIC</span></div>
       <div class="metric-val" id="m-pic">&mdash;</div>
       <div class="metric-foot" id="m-pic-foot">Paid-in / committed</div>
     </div>
     <div class="metric-cell">
-      <div class="metric-label">DPI</div>
+      <div class="metric-label"><span data-tooltip="Distributions to Paid-In — cumulative cash returned ÷ cumulative called. The cleanest measure of how much money has actually come back to LPs.">DPI</span></div>
       <div class="metric-val pos" id="m-dpi">&mdash;</div>
       <div class="metric-foot" id="m-dpi-foot">Distributions / paid-in</div>
     </div>
     <div class="metric-cell">
-      <div class="metric-label">RVPI</div>
+      <div class="metric-label"><span data-tooltip="Residual Value to Paid-In — NAV (unrealized) ÷ paid-in. The portion of fund value still tied up in unrealized portfolio holdings.">RVPI</span></div>
       <div class="metric-val" id="m-rvpi">&mdash;</div>
       <div class="metric-foot" id="m-rvpi-foot">Residual / paid-in</div>
     </div>
     <div class="metric-cell">
-      <div class="metric-label">TVPI</div>
+      <div class="metric-label"><span data-tooltip="Total Value to Paid-In — DPI + RVPI. Total value created per dollar called, realized plus unrealized.">TVPI</span></div>
       <div class="metric-val pos" id="m-tvpi">&mdash;</div>
       <div class="metric-foot" id="m-tvpi-foot">Total value / paid-in</div>
     </div>
     <div class="metric-cell">
-      <div class="metric-label">Gross IRR</div>
+      <div class="metric-label"><span data-tooltip="Pre-fee, pre-carry IRR — the underlying portfolio return before any fund-level costs. Useful for comparing investment skill across managers.">Gross IRR</span></div>
       <div class="metric-val pos" id="m-girr">&mdash;</div>
       <div class="metric-foot" id="m-girr-foot">Pre-fee / pre-carry</div>
     </div>
     <div class="metric-cell">
-      <div class="metric-label">Net IRR</div>
+      <div class="metric-label"><span data-tooltip="The LP annualized return after all fees, carry, and expenses. The number LPs ultimately care about.">Net IRR</span></div>
       <div class="metric-val pos" id="m-nirr">&mdash;</div>
       <div class="metric-foot" id="m-nirr-foot">LP-level, after all costs</div>
     </div>
     <div class="metric-cell">
-      <div class="metric-label">J-Curve Trough</div>
+      <div class="metric-label"><span data-tooltip="Maximum negative TVPI position during the fund life. Reflects the J-curve effect: fees and write-ups create early losses before realizations catch up.">J-Curve Trough</span></div>
       <div class="metric-val neg" id="m-trough">&mdash;</div>
       <div class="metric-foot" id="m-trough-foot">Deepest negative TVPI</div>
     </div>
     <div class="metric-cell">
-      <div class="metric-label">Breakeven Year</div>
+      <div class="metric-label"><span data-tooltip="The year when cumulative distributions equal cumulative called capital (DPI = 1.0x). Earlier breakeven means LPs face less duration risk.">Breakeven Year</span></div>
       <div class="metric-val" id="m-breakeven">&mdash;</div>
       <div class="metric-foot" id="m-breakeven-foot">Year DPI ≥ 1.0x</div>
     </div>
@@ -3303,12 +3572,12 @@ td.deal-result { font-weight: 500; }
     </div>
     <div class="metrics-strip" style="grid-template-columns: repeat(4, 1fr);">
       <div class="metric-cell">
-        <div class="metric-lbl">KS-PME</div>
+        <div class="metric-lbl"><span data-tooltip="Kaplan-Schoar Public Market Equivalent — ratio of distributions to contributions, both compounded to fund end at the public index return. KS-PME ≥ 1.0 means the fund beat the public market on a dollar-weighted basis.">KS-PME</span></div>
         <div class="metric-val" id="pme-ks">&mdash;</div>
         <div class="metric-foot" id="pme-ks-foot">Distributions ÷ contributions, compounded at index</div>
       </div>
       <div class="metric-cell">
-        <div class="metric-lbl">Direct Alpha</div>
+        <div class="metric-lbl"><span data-tooltip="The IRR of fund cash flows discounted at the public index return. Positive means excess return over the public market, annualized.">Direct Alpha</span></div>
         <div class="metric-val" id="pme-da">&mdash;</div>
         <div class="metric-foot">IRR of cash flows discounted by index</div>
       </div>
@@ -3637,6 +3906,21 @@ td.deal-result { font-weight: 500; }
 
 
 </main>
+
+<!-- ================================================
+     SAVED SCENARIOS DRAWER
+================================================ -->
+<div class="scenarios-drawer-backdrop" id="scnDrawerBackdrop"></div>
+<aside class="scenarios-drawer" id="scnDrawer" role="dialog" aria-label="Saved Scenarios">
+  <button class="scenarios-drawer-close" id="scnDrawerClose" aria-label="Close">×</button>
+  <h3>Saved Scenarios</h3>
+  <div class="sub">Persisted locally in this browser. Save a snapshot of the entire model state — inputs, portfolio, advanced toggles, KPI targets — and reload it later.</div>
+  <div class="save-row">
+    <input type="text" id="scnSaveName" placeholder="Scenario name (e.g. 'Fund III Base Case')">
+    <button id="scnSaveNew">Save</button>
+  </div>
+  <div id="scnList"></div>
+</aside>
 </div>
 <script>
 'use strict';
@@ -3812,6 +4096,7 @@ const DEFAULTS = {
   transFeePct: 0,
   transFeeOffset: 100,
   targets: { moic: null, irr: null, tvpi: null, carry: null, fees: null },
+  activePreset: null,
 
   // ===== ADVANCED PE FEATURES =====
   // Recycling: actually reinvest realized capital during investment period
@@ -6032,6 +6317,8 @@ function bindInputs() {
     if (!el) return;
     el.addEventListener('input', e => {
       state[id] = parseFloat(e.target.value) || 0;
+      state.activePreset = null; // user diverged from any preset
+      if (window._updatePresetButtons) window._updatePresetButtons();
       if (id === 'termYears') buildDeploymentGrid();
       recalculate();
     });
@@ -6051,6 +6338,8 @@ function bindInputs() {
     el.addEventListener('input', e => {
       const v = parseFloat(e.target.value);
       state[id] = v;
+      state.activePreset = null;
+      if (window._updatePresetButtons) window._updatePresetButtons();
       if (disp) disp.textContent = v.toFixed(d) + suffix;
       recalculate();
     });
@@ -6063,6 +6352,8 @@ function bindInputs() {
         group.querySelectorAll('label').forEach(l => l.classList.remove('checked'));
         lbl.classList.add('checked');
         state[key] = lbl.dataset.value;
+        state.activePreset = null;
+        if (window._updatePresetButtons) window._updatePresetButtons();
         if (key === 'waterfallType') {
           const wrap = $('americanModeWrap');
           if (wrap) wrap.style.display = state[key] === 'american' ? '' : 'none';
@@ -6144,13 +6435,86 @@ function bindInputs() {
       }
     });
   });
-
-  // Scenario controls
+  // Scenario controls — drawer-based saved scenarios
+  const SCN_STORAGE_KEY = 'folio.fundModel.scenarios';
+  function loadSavedScenarios() {
+    try { return JSON.parse(localStorage.getItem(SCN_STORAGE_KEY) || '[]'); }
+    catch { return []; }
+  }
+  function saveSavedScenarios(arr) {
+    try { localStorage.setItem(SCN_STORAGE_KEY, JSON.stringify(arr)); }
+    catch (e) { console.warn('Could not persist scenarios:', e); }
+  }
+  function renderScenarioList() {
+    const wrap = $('scnList');
+    if (!wrap) return;
+    const arr = loadSavedScenarios();
+    if (arr.length === 0) {
+      wrap.innerHTML = '<div class="muted" style="font-size:11px; padding:14px; text-align:center; border:1px dashed var(--rule);">No saved scenarios yet. Save the current state to begin.</div>';
+      return;
+    }
+    wrap.innerHTML = arr.map((s, i) => {
+      const m = s.savedAt ? new Date(s.savedAt).toLocaleString() : '—';
+      const summary = `${s.snapshot.activeTemplate || '—'} · ${(s.snapshot.fundSize || 0)}mm · ${s.snapshot.carryRate}% / ${s.snapshot.prefRate}%`;
+      return `<div class="scenario-item">
+        <div class="scenario-item-info">
+          <strong>${escapeHtml(s.name)}</strong>
+          <span class="scenario-item-meta">${summary}</span>
+          <span class="scenario-item-meta" style="opacity:0.7;">${m}</span>
+        </div>
+        <div class="scenario-item-actions">
+          <button data-i="${i}" class="load">Load</button>
+          <button data-i="${i}" class="del">Del</button>
+        </div>
+      </div>`;
+    }).join('');
+    // wire load/delete
+    wrap.querySelectorAll('button.load').forEach(b => b.addEventListener('click', () => {
+      const arr = loadSavedScenarios();
+      const i = parseInt(b.dataset.i);
+      if (arr[i] && arr[i].snapshot) {
+        state = Object.assign({}, DEFAULTS, arr[i].snapshot);
+        state.portfolio = state.portfolio || JSON.parse(JSON.stringify(PORTFOLIO_TEMPLATES[state.activeTemplate || 'midmarket'].deals));
+        syncInputsFromState();
+        recalculate();
+        closeDrawer();
+      }
+    }));
+    wrap.querySelectorAll('button.del').forEach(b => b.addEventListener('click', () => {
+      const arr = loadSavedScenarios();
+      const i = parseInt(b.dataset.i);
+      arr.splice(i, 1);
+      saveSavedScenarios(arr);
+      renderScenarioList();
+    }));
+  }
+  function escapeHtml(s) { return String(s).replace(/[<>&"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c])); }
+  function openDrawer() {
+    $('scnDrawer').classList.add('open');
+    $('scnDrawerBackdrop').classList.add('open');
+    renderScenarioList();
+    setTimeout(() => $('scnSaveName').focus(), 100);
+  }
+  function closeDrawer() {
+    $('scnDrawer').classList.remove('open');
+    $('scnDrawerBackdrop').classList.remove('open');
+  }
   const scnSave = $('scn-save');
-  if (scnSave) scnSave.addEventListener('click', () => {
-    try { localStorage.setItem('fundModelState', JSON.stringify(state)); alert('Scenario saved to local browser storage.'); }
-    catch (err) { alert('Save failed: ' + err.message); }
+  if (scnSave) scnSave.addEventListener('click', openDrawer);
+  const scnDrawerClose = $('scnDrawerClose');
+  if (scnDrawerClose) scnDrawerClose.addEventListener('click', closeDrawer);
+  const scnDrawerBackdrop = $('scnDrawerBackdrop');
+  if (scnDrawerBackdrop) scnDrawerBackdrop.addEventListener('click', closeDrawer);
+  const scnSaveNew = $('scnSaveNew');
+  if (scnSaveNew) scnSaveNew.addEventListener('click', () => {
+    const name = $('scnSaveName').value.trim() || `Scenario ${new Date().toISOString().slice(0,10)}`;
+    const arr = loadSavedScenarios();
+    arr.unshift({ name, savedAt: new Date().toISOString(), snapshot: JSON.parse(JSON.stringify(state)) });
+    saveSavedScenarios(arr.slice(0, 25)); // cap at 25
+    $('scnSaveName').value = '';
+    renderScenarioList();
   });
+
   const scnExport = $('scn-export');
   if (scnExport) scnExport.addEventListener('click', () => {
     const data = JSON.stringify(state, null, 2);
@@ -6163,7 +6527,13 @@ function bindInputs() {
     URL.revokeObjectURL(url);
   });
   const scnPrint = $('scn-print');
-  if (scnPrint) scnPrint.addEventListener('click', () => window.print());
+  if (scnPrint) scnPrint.addEventListener('click', () => {
+    document.body.dataset.printDate = new Date().toLocaleString();
+    window.print();
+  });
+
+  // ESC closes drawer
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeDrawer(); });
 
   // Portfolio toggle
   const tog = $('peModeToggle');
@@ -6187,6 +6557,55 @@ function bindInputs() {
   const pfHaircut = $('pf-haircut');
   if (pfHaircut) pfHaircut.addEventListener('click', () => { state.portfolio.forEach(d => d.moic *= 0.8); recalculate(); });
 
+  // CSV export helpers
+  function downloadCSV(filename, rows) {
+    const csv = rows.map(r => r.map(c => {
+      const s = (c === null || c === undefined) ? '' : String(c);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+  const pfCsv = $('pf-csv');
+  if (pfCsv) pfCsv.addEventListener('click', () => {
+    const rows = [['Deal', 'Sector', 'Invest Year', 'Exit Year', 'Hold (y)', 'Invested ($mm)', 'MOIC', 'Proceeds ($mm)']];
+    state.portfolio.forEach(d => {
+      rows.push([d.name, d.sector || '', d.investYear, d.exitYear, (d.exitYear - d.investYear), d.invested, d.moic, (d.invested * d.moic).toFixed(2)]);
+    });
+    downloadCSV(`portfolio-${state.activeTemplate || 'book'}-${new Date().toISOString().slice(0,10)}.csv`, rows);
+  });
+
+  // Portfolio sort
+  let pfSortKey = null, pfSortDir = 'asc';
+  document.querySelectorAll('th.sortable').forEach(th => {
+    th.addEventListener('click', () => {
+      const key = th.dataset.sort;
+      if (pfSortKey === key) {
+        pfSortDir = pfSortDir === 'asc' ? 'desc' : 'asc';
+      } else {
+        pfSortKey = key;
+        pfSortDir = 'asc';
+      }
+      // Update header visual state
+      document.querySelectorAll('th.sortable').forEach(x => x.classList.remove('asc', 'desc'));
+      th.classList.add(pfSortDir);
+      // Sort portfolio
+      state.portfolio.sort((a, b) => {
+        let av, bv;
+        if (key === 'hold') { av = a.exitYear - a.investYear; bv = b.exitYear - b.investYear; }
+        else if (key === 'proceeds') { av = (a.invested||0) * (a.moic||0); bv = (b.invested||0) * (b.moic||0); }
+        else { av = a[key]; bv = b[key]; }
+        if (typeof av === 'string') return pfSortDir === 'asc' ? av.localeCompare(bv) : bv.localeCompare(av);
+        return pfSortDir === 'asc' ? (av||0) - (bv||0) : (bv||0) - (av||0);
+      });
+      recalculate();
+    });
+  });
+
   $('recalc-btn').addEventListener('click', () => recalculate());
   $('reset-btn').addEventListener('click', () => {
     state = JSON.parse(JSON.stringify(DEFAULTS));
@@ -6195,71 +6614,106 @@ function bindInputs() {
     recalculate();
   });
 
-  $('preset-conservative').addEventListener('click', () => {
-    Object.assign(state, {
-      carryRate: 17.5, prefRate: 9.0, feeRateDuring: 1.75, feeRateAfter: 1.0,
-      catchupRate: 80, orgExpensePct: 0.50, gpCommitPct: 3.0,
-      anchorFeeDiscount: 35, anchorCarryShare: 5,
-      waterfallType: 'european'
-    });
-    syncInputsFromState();
-    recalculate();
-  });
+  // ===== Unified preset system =====
+  const PRESETS = {
+    conservative: {
+      label: 'Conservative LP',
+      changes: {
+        carryRate: 17.5, prefRate: 9.0, feeRateDuring: 1.75, feeRateAfter: 1.0,
+        catchupRate: 80, orgExpensePct: 0.50, gpCommitPct: 3.0,
+        anchorFeeDiscount: 35, anchorCarryShare: 5,
+        waterfallType: 'european'
+      }
+    },
+    sponsor: {
+      label: 'Sponsor-Friendly',
+      changes: {
+        carryRate: 22.5, prefRate: 7.0, feeRateDuring: 2.25, feeRateAfter: 1.5,
+        catchupRate: 100, orgExpensePct: 1.0, gpCommitPct: 1.0,
+        anchorFeeDiscount: 15, anchorCarryShare: 0,
+        waterfallType: 'american', americanVariant: 'pure'
+      }
+    },
+    pe: {
+      label: 'PE Mid-Market',
+      changes: {
+        carryRate: 20, prefRate: 8.0, feeRateDuring: 2.0, feeRateAfter: 1.5,
+        catchupRate: 100, orgExpensePct: 0.75, gpCommitPct: 2.0,
+        anchorFeeDiscount: 25, anchorCarryShare: 0,
+        waterfallType: 'american', americanVariant: 'modern',
+        transFeePct: 1.0, transFeeOffset: 100,
+        subLineMonths: 9, peMode: true, activeTemplate: 'midmarket',
+        _portfolio: 'midmarket'
+      }
+    },
+    vc: {
+      label: 'Venture',
+      changes: {
+        carryRate: 20, prefRate: 0, feeRateDuring: 2.5, feeRateAfter: 2.0,
+        catchupRate: 0, orgExpensePct: 1.0, gpCommitPct: 2.0,
+        anchorFeeDiscount: 0, anchorCarryShare: 0,
+        waterfallType: 'american', americanVariant: 'pure',
+        transFeePct: 0, transFeeOffset: 100,
+        subLineMonths: 0, peMode: true, activeTemplate: 'venture',
+        investmentPeriod: 5, termYears: 12, grossMoic: 3.0,
+        _portfolio: 'venture'
+      }
+    },
+    credit: {
+      label: 'Private Credit',
+      changes: {
+        carryRate: 15, prefRate: 7.0, feeRateDuring: 1.5, feeRateAfter: 1.0,
+        catchupRate: 0, orgExpensePct: 0.40, gpCommitPct: 2.0,
+        anchorFeeDiscount: 25, anchorCarryShare: 0,
+        waterfallType: 'european',
+        transFeePct: 0.5, transFeeOffset: 100,
+        subLineMonths: 6, peMode: false, grossMoic: 1.5,
+        termYears: 8, investmentPeriod: 3
+      }
+    }
+  };
 
-  $('preset-sponsor').addEventListener('click', () => {
-    Object.assign(state, {
-      carryRate: 22.5, prefRate: 7.0, feeRateDuring: 2.25, feeRateAfter: 1.5,
-      catchupRate: 100, orgExpensePct: 1.0, gpCommitPct: 1.0,
-      anchorFeeDiscount: 15, anchorCarryShare: 0,
-      waterfallType: 'american', americanVariant: 'pure'
-    });
+  function applyPreset(presetKey) {
+    const preset = PRESETS[presetKey];
+    if (!preset) return;
+    // Track changed fields for visual highlight
+    const changedFields = [];
+    for (const k in preset.changes) {
+      if (k.startsWith('_')) continue;
+      if (state[k] !== preset.changes[k]) changedFields.push(k);
+    }
+    Object.assign(state, preset.changes);
+    if (preset.changes._portfolio) {
+      state.portfolio = JSON.parse(JSON.stringify(PORTFOLIO_TEMPLATES[preset.changes._portfolio].deals));
+    }
+    state.activePreset = presetKey;
     syncInputsFromState();
+    updatePresetButtons();
     recalculate();
-  });
+    // Pulse changed fields
+    changedFields.forEach(f => {
+      const el = $(f);
+      if (el) {
+        const wrap = el.closest('.input-row, .check-row, .input-grid > div');
+        const target = wrap || el.parentElement;
+        if (target) {
+          target.classList.add('field-changed');
+          setTimeout(() => target.classList.remove('field-changed'), 1700);
+        }
+      }
+    });
+  }
 
-  $('preset-pe').addEventListener('click', () => {
-    Object.assign(state, {
-      carryRate: 20, prefRate: 8.0, feeRateDuring: 2.0, feeRateAfter: 1.5,
-      catchupRate: 100, orgExpensePct: 0.75, gpCommitPct: 2.0,
-      anchorFeeDiscount: 25, anchorCarryShare: 0,
-      waterfallType: 'american', americanVariant: 'modern',
-      transFeePct: 1.0, transFeeOffset: 100,
-      subLineMonths: 9, peMode: true, activeTemplate: 'midmarket'
+  function updatePresetButtons() {
+    document.querySelectorAll('.preset-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.preset === state.activePreset);
     });
-    state.portfolio = JSON.parse(JSON.stringify(PORTFOLIO_TEMPLATES['midmarket'].deals));
-    syncInputsFromState();
-    recalculate();
-  });
+  }
+  // Expose for syncInputsFromState
+  window._updatePresetButtons = updatePresetButtons;
 
-  const presetVC = $('preset-vc');
-  if (presetVC) presetVC.addEventListener('click', () => {
-    Object.assign(state, {
-      carryRate: 20, prefRate: 0, feeRateDuring: 2.5, feeRateAfter: 2.0,
-      catchupRate: 0, orgExpensePct: 1.0, gpCommitPct: 2.0,
-      anchorFeeDiscount: 0, anchorCarryShare: 0,
-      waterfallType: 'american', americanVariant: 'pure',
-      transFeePct: 0, transFeeOffset: 100,
-      subLineMonths: 0, peMode: true, activeTemplate: 'venture',
-      investmentPeriod: 5, termYears: 12, grossMoic: 3.0
-    });
-    state.portfolio = JSON.parse(JSON.stringify(PORTFOLIO_TEMPLATES['venture'].deals));
-    syncInputsFromState();
-    recalculate();
-  });
-
-  const presetCredit = $('preset-credit');
-  if (presetCredit) presetCredit.addEventListener('click', () => {
-    Object.assign(state, {
-      carryRate: 15, prefRate: 7.0, feeRateDuring: 1.5, feeRateAfter: 1.0,
-      catchupRate: 0, orgExpensePct: 0.40, gpCommitPct: 2.0,
-      anchorFeeDiscount: 25, anchorCarryShare: 0,
-      waterfallType: 'european',
-      transFeePct: 0.5, transFeeOffset: 100,
-      subLineMonths: 6, peMode: false, grossMoic: 1.5,
-      termYears: 8, investmentPeriod: 3
-    });
-    syncInputsFromState();
-    recalculate();
+  document.querySelectorAll('.preset-btn').forEach(btn => {
+    btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
   });
 
   // ===== Advanced bindings =====
@@ -6389,6 +6843,7 @@ function syncInputsFromState() {
   const wrap = $('americanModeWrap');
   if (wrap) wrap.style.display = state.waterfallType === 'american' ? '' : 'none';
   buildDeploymentGrid();
+  if (window._updatePresetButtons) window._updatePresetButtons();
 }
 
 function buildDeploymentGrid() {
@@ -6407,6 +6862,8 @@ function buildDeploymentGrid() {
     wrap.querySelector('input').addEventListener('input', e => {
       const idx = parseInt(e.target.dataset.year);
       state.deployment[idx] = parseFloat(e.target.value) || 0;
+      state.activePreset = null;
+      if (window._updatePresetButtons) window._updatePresetButtons();
       updateDeploymentTotals();
       recalculate();
     });
