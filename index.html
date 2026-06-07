@@ -3043,6 +3043,49 @@ table tfoot td {
   color: #fff;
 }
 .folio-link-linkedin:hover svg { color: #fff; }
+
+/* Masthead in-line byline + contact pills */
+.scn-divider {
+  width: 1px;
+  height: 18px;
+  background: var(--rule-strong);
+  margin: 0 4px;
+}
+.scn-byline {
+  font-size: 11px;
+  color: var(--ink-mid);
+  letter-spacing: 0;
+  margin-right: 4px;
+}
+.scn-byline em {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--ink);
+  font-size: 12.5px;
+}
+.scenario-controls .pill-contact,
+.scenario-controls .pill-linkedin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  padding: 7px 14px 7px 12px;
+}
+.scenario-controls .pill-contact svg { color: var(--ink-mid); transition: color 0.18s var(--ease); }
+.scenario-controls .pill-contact:hover svg { color: var(--ink); }
+.scenario-controls .pill-linkedin {
+  background: #0A66C2;
+  border-color: #0A66C2;
+  color: #fff;
+}
+.scenario-controls .pill-linkedin svg { color: #fff; }
+.scenario-controls .pill-linkedin:hover {
+  background: #084d92;
+  border-color: #084d92;
+  color: #fff;
+}
+.scenario-controls .pill-linkedin:hover svg { color: #fff; }
 .folio-footer-fineprint {
   max-width: 1400px;
   margin: 32px auto 0;
@@ -3255,6 +3298,16 @@ button:focus-visible {
       <button class="pill" id="scn-save" title="Save & manage scenarios (localStorage)">Scenarios</button>
       <button class="pill" id="scn-export" title="Export current state as JSON file">Export JSON</button>
       <button class="pill" id="scn-print" title="Print or save as PDF">Print</button>
+      <span class="scn-divider"></span>
+      <span class="scn-byline">by <em>Peter Onelson</em></span>
+      <a href="mailto:ponelson@gmail.com" class="pill pill-contact" title="ponelson@gmail.com" aria-label="Email Peter Onelson">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-10 5L2 7"></path></svg>
+        <span>Email</span>
+      </a>
+      <a href="https://www.linkedin.com/in/ponelson/" target="_blank" rel="noopener noreferrer" class="pill pill-linkedin" title="LinkedIn profile" aria-label="LinkedIn">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.99 0 1.78-.77 1.78-1.72V1.72C24 .77 23.21 0 22.22 0Z"></path></svg>
+        <span>LinkedIn</span>
+      </a>
     </div>
   </div>
 
