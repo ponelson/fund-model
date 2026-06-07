@@ -2022,6 +2022,15 @@ td.deal-result { font-weight: 500; }
 /* Re-style for tabs IX-XII */
 .tab-roman { font-variant-numeric: oldstyle-nums; }
 
+/* Vintage benchmark — active row */
+tr.vb-active {
+  background: rgba(46, 74, 53, 0.06);
+}
+tr.vb-active td:first-child {
+  border-left: 2px solid var(--forest);
+  padding-left: 12px;
+}
+
 /* Adjustments banner */
 .adj-banner {
   display: flex;
@@ -2093,6 +2102,53 @@ td.deal-result { font-weight: 500; }
   background: var(--forest);
   color: var(--paper);
   border-color: var(--forest);
+}
+
+/* Advanced mechanics input rows */
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+  padding: 12px 0;
+  border-bottom: 1px dashed var(--rule);
+}
+.input-row:last-child { border-bottom: none; }
+.input-row > label:first-child {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px;
+  color: var(--ink);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+.input-row > label:first-child .hint {
+  display: block;
+  font-size: 10px;
+  color: var(--ink-faint);
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: 0;
+  line-height: 1.4;
+}
+.input-row .input-with-display {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 50%;
+  max-width: 220px;
+}
+.input-row .input-with-display input[type=range] { flex: 1; }
+.input-row .input-with-display span {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-mid);
+  min-width: 52px;
+  text-align: right;
 }
 
 /* Preset button — active selection state */
@@ -2360,6 +2416,793 @@ th.sortable.desc::after { content: ' ↓'; color: var(--oxblood); opacity: 1; }
     padding-bottom: 4pt;
     margin-bottom: 8pt;
   }
+}
+
+/* =================================================================
+   APPLE REFINEMENT LAYER — final polish overrides
+   Soft shadows, refined radius, smoother transitions, lighter borders,
+   restrained surfaces, generous spacing. Layered last so it wins.
+================================================================== */
+
+:root {
+  /* Refined neutral palette — lifts the cream slightly cooler and brighter */
+  --paper:       #F6F1E6;
+  --paper-warm:  #FAF6EC;
+  --surface:     #FFFFFF;
+  --vellum:      #FBF7ED;
+  --ink:         #1A1A1F;
+  --ink-mid:     #5A5860;
+  --ink-faint:   #9C9890;
+  --rule:        rgba(26, 26, 31, 0.08);
+  --rule-strong: rgba(26, 26, 31, 0.14);
+
+  /* Apple-style shadow tokens */
+  --shadow-xs:  0 1px 1px rgba(0, 0, 0, 0.03);
+  --shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.02);
+  --shadow-md:  0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.04);
+  --shadow-lg:  0 1px 2px rgba(0, 0, 0, 0.04), 0 12px 32px rgba(0, 0, 0, 0.06);
+  --shadow-xl:  0 2px 4px rgba(0, 0, 0, 0.04), 0 24px 64px rgba(0, 0, 0, 0.08);
+
+  /* Refined transition tokens */
+  --ease:       cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Refined radius */
+  --r-sm: 4px;
+  --r-md: 8px;
+  --r-lg: 12px;
+  --r-xl: 18px;
+}
+
+* { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body { letter-spacing: -0.003em; }
+
+/* MASTHEAD — quieter, more refined */
+.masthead {
+  padding: 56px 48px 32px;
+  background: linear-gradient(to bottom, var(--paper-warm), var(--paper) 80%);
+}
+.eyebrow,
+.masthead-eyebrow,
+.title-eyebrow { letter-spacing: 0.22em; }
+.title-display,
+h1.masthead-title { font-feature-settings: "ss01", "liga"; }
+
+/* MODE FLAGS — softer pills with crisp typography */
+.mode-flag,
+.mode-flag.alt,
+.mode-flag.warn {
+  border-radius: 100px;
+  padding: 6px 14px 6px 28px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  font-size: 10.5px;
+  box-shadow: var(--shadow-xs);
+  transition: all 0.2s var(--ease);
+}
+.mode-flag::before {
+  width: 6px; height: 6px; left: 12px;
+}
+
+/* SCENARIO CONTROL PILLS — Apple system look */
+.scenario-controls .pill {
+  border-radius: 100px;
+  padding: 7px 16px;
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+  transition: all 0.18s var(--ease);
+  box-shadow: var(--shadow-xs);
+}
+.scenario-controls .pill:hover {
+  background: var(--paper);
+  border-color: var(--ink-mid);
+  transform: translateY(-0.5px);
+  box-shadow: var(--shadow-sm);
+}
+.scenario-controls .pill:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
+}
+
+/* TABS — sticky, frosted, refined */
+nav.tabs {
+  background: rgba(246, 241, 230, 0.82);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--rule);
+  box-shadow: var(--shadow-xs);
+  padding: 0 36px;
+}
+.tab {
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--ink-mid);
+  border-bottom: 2px solid transparent;
+  transition: all 0.18s var(--ease);
+  padding: 18px 20px 16px;
+}
+.tab:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.4);
+}
+.tab.active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* INPUT GROUP CARDS — soft surfaces with refined elevation */
+.input-group {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  padding: 22px 22px 18px;
+  transition: box-shadow 0.2s var(--ease);
+}
+.input-group:hover { box-shadow: var(--shadow-md); }
+/* Remove the heavy corner brackets — Apple is about restraint */
+.input-group::before,
+.input-group::after { display: none; }
+.input-group h3 {
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ink);
+}
+
+/* SUMMARY CARDS */
+.sum-card {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  padding: 22px 22px 18px;
+  transition: all 0.2s var(--ease);
+}
+.sum-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.sum-card::before,
+.sum-card::after { display: none; }
+
+/* BENCH-BLOCK (Benchmarks, Risk Lab, LP Reporting) */
+.bench-block {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-sm);
+  padding: 24px 26px;
+  transition: box-shadow 0.2s var(--ease);
+}
+.bench-block:hover { box-shadow: var(--shadow-md); }
+.bench-block::before,
+.bench-block::after { display: none; }
+
+/* METRICS STRIP CELLS */
+.metric-cell {
+  background: var(--vellum);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  padding: 16px 18px;
+  transition: all 0.2s var(--ease);
+}
+.metric-cell:hover {
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ILPA CARDS */
+.ilpa-card {
+  background: var(--vellum);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-xs);
+  padding: 18px 20px;
+}
+
+/* KPI BAND */
+.kpi-band {
+  background: linear-gradient(to bottom, var(--surface), var(--paper-warm));
+  border-bottom: 1px solid var(--rule-strong);
+  border-top: 1px solid var(--rule);
+  box-shadow: var(--shadow-xs);
+}
+.kpi {
+  transition: background 0.2s var(--ease);
+}
+.kpi:hover { background: rgba(255, 255, 255, 0.55); }
+.kpi-target-input {
+  border-radius: var(--r-sm);
+  border: 1px solid var(--rule-strong);
+  font-size: 12px;
+  transition: all 0.15s var(--ease);
+}
+.kpi-target-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(26, 26, 31, 0.08);
+}
+
+/* BUTTONS — Apple system style */
+.btn,
+.btn-secondary,
+.btn-small {
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+  color: var(--ink);
+  transition: all 0.18s var(--ease);
+  box-shadow: var(--shadow-xs);
+  cursor: pointer;
+}
+.btn:hover, .btn-secondary:hover, .btn-small:hover {
+  background: var(--paper);
+  border-color: var(--ink-mid);
+  transform: translateY(-0.5px);
+  box-shadow: var(--shadow-sm);
+}
+.btn:active, .btn-secondary:active, .btn-small:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
+}
+/* Primary action (Recalculate) — solid */
+#recalc-btn,
+.btn:not(.btn-secondary):not(.btn-small) {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+#recalc-btn:hover,
+.btn:not(.btn-secondary):not(.btn-small):hover {
+  background: #000;
+  border-color: #000;
+}
+.btn-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--rule);
+  margin: 0 6px;
+}
+
+/* PRESET BUTTONS — when active, oxblood pill with subtle shadow */
+.preset-btn {
+  background: var(--surface);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+.preset-btn.active {
+  background: #8B252A;
+  border-color: #8B252A;
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(139, 37, 42, 0.20), 0 4px 12px rgba(139, 37, 42, 0.12);
+}
+.preset-btn.active::before {
+  color: #fff;
+  font-size: 8px;
+}
+
+/* TOGGLE PILLS — Apple-style switches */
+.toggle-pill[data-toggle] {
+  position: relative;
+  padding: 0;
+  width: 42px;
+  height: 24px;
+  border-radius: 100px;
+  background: var(--rule-strong);
+  border: none;
+  text-indent: -9999px;
+  overflow: hidden;
+  transition: background 0.22s var(--ease);
+  flex-shrink: 0;
+  align-self: center;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+.toggle-pill[data-toggle]::after {
+  content: '';
+  position: absolute;
+  top: 2px; left: 2px;
+  width: 20px; height: 20px;
+  background: #fff;
+  border-radius: 50%;
+  transition: transform 0.22s var(--ease-spring);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.15), 0 2px 4px rgba(0,0,0,0.08);
+}
+.toggle-pill[data-toggle].on {
+  background: #2B6B40;
+}
+.toggle-pill[data-toggle].on::after {
+  transform: translateX(18px);
+}
+
+/* RADIO PILLS — segmented control style */
+.radio-pills {
+  background: rgba(26, 26, 31, 0.05);
+  border-radius: var(--r-md);
+  padding: 3px;
+  display: inline-flex;
+  border: 1px solid var(--rule);
+}
+.radio-pills label {
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: all 0.18s var(--ease);
+  border: none;
+  cursor: pointer;
+}
+.radio-pills label:hover { color: var(--ink); }
+.radio-pills label.checked {
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-sm);
+}
+
+/* INPUT FIELDS — refined focus rings */
+input[type="number"],
+input[type="text"],
+.field input {
+  border-radius: var(--r-sm);
+  border: 1px solid var(--rule-strong);
+  padding: 8px 12px;
+  font-size: 13px;
+  background: var(--surface);
+  transition: all 0.15s var(--ease);
+}
+input[type="number"]:focus,
+input[type="text"]:focus,
+.field input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(26, 26, 31, 0.08);
+}
+
+/* RANGE SLIDERS — Apple-style track and thumb */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--rule-strong);
+  border-radius: 100px;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm), 0 0 0 0 rgba(26,26,31,0);
+  cursor: grab;
+  transition: box-shadow 0.18s var(--ease), transform 0.1s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: var(--shadow-md), 0 0 0 4px rgba(26,26,31,0.06);
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  cursor: grabbing;
+  transform: scale(0.96);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  background: #fff;
+  border: 1px solid var(--rule-strong);
+  border-radius: 50%;
+  box-shadow: var(--shadow-sm);
+  cursor: grab;
+}
+
+/* TABLES — quieter borders */
+table { border-collapse: collapse; }
+table th, table tr td { border-bottom: 1px solid var(--rule); }
+table thead { background: transparent; }
+table thead th {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--rule-strong);
+}
+table tbody td {
+  padding: 11px 14px;
+  font-size: 12.5px;
+}
+table tfoot td {
+  background: var(--vellum);
+  border-top: 1px solid var(--rule-strong);
+  border-bottom: none;
+  font-weight: 600;
+}
+.data-table-wrap {
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+}
+
+/* TEMPLATE CHIPS */
+.template-chip {
+  border-radius: 100px;
+  padding: 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  box-shadow: var(--shadow-xs);
+  transition: all 0.18s var(--ease);
+  font-size: 11px;
+}
+.template-chip:hover {
+  background: var(--paper);
+  border-color: var(--ink-mid);
+  transform: translateY(-0.5px);
+  box-shadow: var(--shadow-sm);
+}
+.template-chip.active {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+  box-shadow: var(--shadow-md);
+}
+
+/* ADJUSTMENTS BANNER — softer */
+.adj-banner {
+  background: rgba(143, 106, 31, 0.04);
+  border-left: 2px solid #8F6A1F;
+  border-top: none;
+  border-bottom: 1px solid var(--rule);
+  border-radius: 0;
+  padding: 12px 18px;
+  margin: 0;
+}
+.adj-pill {
+  border-radius: 100px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 5px 12px;
+  box-shadow: var(--shadow-xs);
+}
+
+/* SCENARIOS DRAWER — frosted */
+.scenarios-drawer {
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: saturate(180%) blur(28px);
+  -webkit-backdrop-filter: saturate(180%) blur(28px);
+  border-left: 1px solid var(--rule);
+  box-shadow: -8px 0 48px rgba(0, 0, 0, 0.10);
+  padding: 32px 28px;
+}
+.scenario-item {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-xs);
+  transition: all 0.18s var(--ease);
+}
+.scenario-item:hover {
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-0.5px);
+}
+.scenario-item-actions button {
+  border-radius: 100px;
+  padding: 5px 10px;
+  font-size: 10px;
+  background: transparent;
+  border: 1px solid var(--rule-strong);
+  transition: all 0.15s var(--ease);
+}
+.save-row input {
+  border-radius: var(--r-sm);
+  padding: 10px 14px;
+  font-size: 13px;
+  background: var(--vellum);
+  border: 1px solid var(--rule);
+}
+.save-row input:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: var(--surface);
+  box-shadow: 0 0 0 3px rgba(26, 26, 31, 0.06);
+}
+.save-row button {
+  border-radius: 100px;
+  padding: 10px 20px;
+  background: var(--ink);
+  color: #fff;
+  border: 1px solid var(--ink);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.18s var(--ease);
+}
+.save-row button:hover {
+  background: #000;
+  box-shadow: var(--shadow-md);
+}
+
+/* CONTACT FOOTER — clean, generous, Apple-style */
+.folio-footer {
+  margin-top: 80px;
+  padding: 48px 48px 56px;
+  background: var(--surface);
+  border-top: 1px solid var(--rule);
+}
+.folio-footer-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.folio-footer-mark {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.folio-footer-wordmark {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: 28px;
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.folio-footer-wordmark .period {
+  color: #8B252A;
+}
+.folio-footer-tagline {
+  font-size: 11px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+  font-style: italic;
+}
+.folio-footer-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-end;
+}
+.folio-footer-by {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.folio-footer-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: var(--ink-faint);
+  font-family: 'IBM Plex Mono', monospace;
+}
+.folio-footer-name {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.folio-footer-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.folio-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 100px;
+  background: var(--surface);
+  border: 1px solid var(--rule-strong);
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  transition: all 0.2s var(--ease);
+  box-shadow: var(--shadow-xs);
+}
+.folio-link svg {
+  color: var(--ink-mid);
+  transition: color 0.2s var(--ease);
+  flex-shrink: 0;
+}
+.folio-link:hover {
+  background: var(--paper);
+  border-color: var(--ink-mid);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.folio-link:hover svg { color: var(--ink); }
+.folio-link:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+.folio-link-linkedin {
+  background: #0A66C2;
+  border-color: #0A66C2;
+  color: #fff;
+}
+.folio-link-linkedin svg { color: #fff; }
+.folio-link-linkedin:hover {
+  background: #084d92;
+  border-color: #084d92;
+  color: #fff;
+}
+.folio-link-linkedin:hover svg { color: #fff; }
+.folio-footer-fineprint {
+  max-width: 1400px;
+  margin: 32px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--rule);
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  line-height: 1.6;
+  font-style: italic;
+  letter-spacing: 0;
+  text-align: center;
+}
+@media (max-width: 700px) {
+  .folio-footer { padding: 36px 24px; }
+  .folio-footer-inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .folio-footer-meta { align-items: flex-start; width: 100%; }
+  .folio-footer-actions { flex-wrap: wrap; }
+}
+
+/* KPI BAND LABEL — refined Apple-style corner badge */
+.kpi-band-label {
+  background: rgba(26, 26, 31, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 0 0 var(--r-md) 0;
+  padding: 5px 14px 5px 32px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+}
+
+/* TOOLTIP — softer Apple-style */
+[data-tooltip]::after {
+  background: rgba(26, 26, 31, 0.94);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-md);
+  padding: 8px 12px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: -0.005em;
+  line-height: 1.45;
+  box-shadow: var(--shadow-lg);
+  width: 240px;
+}
+[data-tooltip]::before {
+  border-top-color: rgba(26, 26, 31, 0.94);
+}
+
+/* SECTION HEADERS */
+.section-header h2,
+section.panel > .section-header > h2 {
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+/* DEPLOYMENT GRID INPUTS */
+.deployment-year input {
+  border-radius: var(--r-sm);
+  text-align: center;
+}
+
+/* DEAL TABLE INPUTS */
+.deal-table-input {
+  border-radius: 4px;
+  border: 1px solid transparent;
+  padding: 6px 8px;
+  font-size: 12px;
+  background: transparent;
+  transition: all 0.15s var(--ease);
+}
+.deal-table-input:focus,
+.deal-table-input:hover {
+  background: var(--surface);
+  border-color: var(--rule-strong);
+}
+.deal-table-input:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 2px rgba(26, 26, 31, 0.06);
+}
+
+/* DEAL ACTION BUTTON */
+.deal-action-btn {
+  border-radius: 50%;
+  width: 22px; height: 22px;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink-faint);
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.15s var(--ease);
+  cursor: pointer;
+}
+.deal-action-btn:hover {
+  background: #FFE5E5;
+  border-color: #D14444;
+  color: #D14444;
+}
+
+/* PANELS — refined */
+.panel {
+  padding-top: 36px;
+}
+
+/* Sparkline polish — slightly thicker, smoother */
+.kpi-sparkline polyline { stroke-width: 1.5; }
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+  outline: 2px solid rgba(26, 26, 31, 0.4);
+  outline-offset: 2px;
+}
+button:focus-visible {
+  outline: 2px solid rgba(26, 26, 31, 0.4);
+  outline-offset: 2px;
+}
+
+/* Chart wraps — refined containers */
+.chart-wrap {
+  background: var(--surface);
+  border-radius: var(--r-md);
+  padding: 18px;
+  border: 1px solid var(--rule);
+}
+
+/* TERMSHEET — refined paper feel */
+.termsheet-wrap {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.6);
+  padding: 56px 64px;
+}
+.ts-row {
+  border-bottom: 1px solid var(--rule);
+}
+
+/* WATERFALL bars — refined */
+.bar-fill {
+  border-radius: 3px;
+  transition: width 0.5s var(--ease);
+}
+.bar-track {
+  border-radius: 4px;
+  background: var(--rule);
+  overflow: hidden;
+}
+
+/* WATERFALL bar styling */
+.waterfall-bar {
+  background: var(--surface);
+  border-radius: var(--r-md);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow-sm);
+  padding: 22px 24px;
 }
 
 </style>
@@ -3905,7 +4748,41 @@ th.sortable.desc::after { content: ' ↓'; color: var(--oxblood); opacity: 1; }
 </section>
 
 
-</main>
+<!-- ================================================
+     CONTACT FOOTER
+================================================ -->
+<footer class="folio-footer">
+  <div class="folio-footer-inner">
+    <div class="folio-footer-mark">
+      <div class="folio-footer-wordmark">Folio<span class="period">.</span></div>
+      <div class="folio-footer-tagline">A private fund prospectus &amp; interactive model</div>
+    </div>
+    <div class="folio-footer-meta">
+      <div class="folio-footer-by">
+        <span class="folio-footer-label">Built by</span>
+        <span class="folio-footer-name">Peter Onelson</span>
+      </div>
+      <div class="folio-footer-actions">
+        <a href="mailto:ponelson@gmail.com" class="folio-link folio-link-email" aria-label="Email Peter Onelson">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="m22 7-10 5L2 7"></path>
+          </svg>
+          <span>ponelson@gmail.com</span>
+        </a>
+        <a href="https://www.linkedin.com/in/ponelson/" target="_blank" rel="noopener noreferrer" class="folio-link folio-link-linkedin" aria-label="View LinkedIn profile">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.27 2.38 4.27 5.47v6.27ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.99 0 1.78-.77 1.78-1.72V1.72C24 .77 23.21 0 22.22 0Z"></path>
+          </svg>
+          <span>LinkedIn</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="folio-footer-fineprint">
+    For illustrative and educational purposes only. Not an offer to sell or solicit. All terms are configurable; figures recalculate live.
+  </div>
+</footer></main>
 
 <!-- ================================================
      SAVED SCENARIOS DRAWER
@@ -4192,15 +5069,54 @@ const fmtMMlong = (n, d = 0) => (n < 0 ? '−' : '') + '$' + fmt(Math.abs(n) * 1
 
 // ============= IRR =============
 function computeIRR(cashFlows) {
-  const npv = r => cashFlows.reduce((s, cf, t) => s + cf / Math.pow(1 + r, t), 0);
-  let lo = -0.99, hi = 5.0;
-  if (npv(lo) * npv(hi) > 0) {
-    for (let i = 0; i < 30; i++) {
-      hi *= 1.5;
-      if (npv(lo) * npv(hi) <= 0) break;
-    }
-    if (npv(lo) * npv(hi) > 0) return NaN;
+  // Drop leading zero flows (no impact, but distort npv expansion)
+  let firstNonZero = 0;
+  while (firstNonZero < cashFlows.length && Math.abs(cashFlows[firstNonZero]) < 1e-9) firstNonZero++;
+  if (firstNonZero >= cashFlows.length) return NaN;
+  const cf = cashFlows.slice(firstNonZero);
+
+  // Need at least one positive and one negative cash flow
+  let hasPos = false, hasNeg = false;
+  for (const v of cf) { if (v > 1e-9) hasPos = true; if (v < -1e-9) hasNeg = true; }
+  if (!hasPos || !hasNeg) return NaN;
+
+  const npv = r => cf.reduce((s, c, t) => s + c / Math.pow(1 + r, t), 0);
+
+  // Try a wide spectrum of bracket pairs — for extreme-return funds (venture upside),
+  // the function value at standard brackets like (-0.99, 5) may be same-sign.
+  const candidates = [
+    [-0.95, 0.5], [-0.95, 2], [-0.95, 5],
+    [-0.5, 0.5], [-0.5, 2], [-0.5, 10],
+    [-0.1, 0.5], [-0.1, 10],
+    [0.0, 1], [0.0, 5], [0.0, 20], [0.0, 50],
+    [0.5, 20], [1.0, 50]
+  ];
+  let lo = null, hi = null;
+  for (const [a, b] of candidates) {
+    const na = npv(a), nb = npv(b);
+    if (isFinite(na) && isFinite(nb) && na * nb < 0) { lo = a; hi = b; break; }
   }
+  if (lo === null) {
+    // Last resort: Newton-Raphson from a few seed points
+    const seeds = [0.1, 0.25, 0.5, 1.0, 2.0, -0.1];
+    for (const seed of seeds) {
+      let r = seed;
+      for (let i = 0; i < 50; i++) {
+        const v = npv(r);
+        if (Math.abs(v) < 1e-7) return r;
+        // numerical derivative
+        const h = 1e-5;
+        const dv = (npv(r + h) - v) / h;
+        if (Math.abs(dv) < 1e-12) break;
+        const next = r - v / dv;
+        if (!isFinite(next) || next < -0.99) break;
+        if (Math.abs(next - r) < 1e-9) return next;
+        r = next;
+      }
+    }
+    return NaN;
+  }
+  // Bisection
   for (let i = 0; i < 200; i++) {
     const mid = (lo + hi) / 2;
     const v = npv(mid);
@@ -4644,18 +5560,34 @@ function computePortfolioStats(deals) {
 
 // NAV roll-forward, returns per-year NAV bridge and key multiples
 function computeNAVSchedule(T, IP, calls, dep, exitsByYear, costExitedByYear, netFeesByYear, lpByYear, totalInvested, totalGrossProceeds, vintageItems, peMode) {
-  // Build investment book: { investYear, exitYear, invested, totalProceeds }
+  // Build investment book that properly tracks year-by-year unrealized value
   const book = [];
   if (peMode && vintageItems.length > 0) {
-    for (const v of vintageItems) {
-      book.push({
-        invY: v.investYear, exY: v.exitYear,
-        cost: v.cost, proc: v.proceeds
-      });
-    }
-  } else {
+    // Portfolio mode — use each deal directly
     for (const v of vintageItems) {
       book.push({ invY: v.investYear, exY: v.exitYear, cost: v.cost, proc: v.proceeds });
+    }
+  } else {
+    // Aggregate mode — build a synthetic book where each year's deployment is its own
+    // micro-vintage that exits in proportion to the exit profile. Each dep[y] gets
+    // distributed across exit years using the same exit weight curve as the model.
+    const totalExits = exitsByYear.reduce((a,b) => a+b, 0);
+    const grossMoic = totalInvested > 0 ? totalGrossProceeds / totalInvested : 1;
+    for (let invY = 1; invY <= T; invY++) {
+      const invAmount = dep[invY-1] || 0;
+      if (invAmount <= 0) continue;
+      // Distribute this year's investment across exit years proportionally
+      for (let exY = invY + 1; exY <= T; exY++) {
+        const exitWeight = totalExits > 0 ? (exitsByYear[exY-1] || 0) / totalExits : 0;
+        if (exitWeight <= 0) continue;
+        const sliceInvested = invAmount * exitWeight;
+        book.push({
+          invY: invY,
+          exY: exY,
+          cost: sliceInvested,
+          proc: sliceInvested * grossMoic
+        });
+      }
     }
   }
 
@@ -4664,10 +5596,10 @@ function computeNAVSchedule(T, IP, calls, dep, exitsByYear, costExitedByYear, ne
   function unrealizedAt(y) {
     let v = 0;
     for (const d of book) {
-      if (y < d.invY) continue; // not yet invested
-      if (y >= d.exY) continue; // already exited
+      if (y < d.invY) continue;       // not yet invested
+      if (y >= d.exY) continue;       // already exited
       const span = Math.max(1, d.exY - d.invY);
-      const progress = (y - d.invY + 1) / span; // at end-of-year y
+      const progress = (y - d.invY + 1) / span;
       v += d.cost + (d.proc - d.cost) * progress;
     }
     return v;
@@ -4681,34 +5613,37 @@ function computeNAVSchedule(T, IP, calls, dep, exitsByYear, costExitedByYear, ne
   let breakevenYear = null;
   for (let y = 1; y <= T; y++) {
     const cap = calls[y-1] || 0;
-    const dist = lpByYear[y-1] || 0; // LP distributions (net)
-    const dist_gross = exitsByYear[y-1] || 0; // gross exit proceeds
+    const dist = lpByYear[y-1] || 0;
     const realized = exitsByYear[y-1] || 0;
     const fee = netFeesByYear[y-1] || 0;
     cumCalls += cap;
     cumDist += dist;
     const endNAV = unrealizedAt(y);
-    // unrealized change = endNAV - begin - (deployments y) + (cost exited y)
     const invested_y = dep[y-1] || 0;
     const costExited_y = costExitedByYear[y-1] || 0;
     const unrealizedDelta = endNAV - begin - invested_y + costExited_y;
     const dpi = cumCalls > 0 ? cumDist / cumCalls : 0;
     const rvpi = cumCalls > 0 ? endNAV / cumCalls : 0;
     const tvpi = dpi + rvpi;
-    const pic = cumCalls; // dollars, not ratio here
     rows.push({
       y, begin, calls: cap, distributions: dist,
       realized, unrealized: unrealizedDelta,
       fees: fee, end: endNAV,
       cumCalls, cumDist, dpi, rvpi, tvpi
     });
-    if (tvpi - 1 < trough) { trough = tvpi - 1; troughYear = y; }
+    // J-curve trough: only consider years where capital has been called AND the
+    // fund could meaningfully be "below water". This excludes the spurious Y1 TVPI=0
+    // case where no money has been called yet, and only flags real drawdowns.
+    if (cumCalls > 0.5 && tvpi < 1.0) {
+      const depth = 1.0 - tvpi;
+      if (depth > trough) { trough = depth; troughYear = y; }
+    }
     if (breakevenYear === null && dpi >= 1) breakevenYear = y;
     begin = endNAV;
   }
   return {
     rows,
-    trough: Math.abs(trough),
+    trough,                     // depth below 1.0x TVPI (positive number)
     troughYear,
     breakevenYear: breakevenYear || '—',
     finalDPI: rows.length ? rows[rows.length-1].dpi : 0,
@@ -5348,22 +6283,25 @@ function renderTermSheet(m) {
     'as set forth in the partnership agreement'
   ) + '</span>';
 
+  // For each ts-* element, write ONLY the dynamic value into its strong tag —
+  // the surrounding static text is part of the markup and should not be duplicated.
   $('ts-target').textContent = fmtUSD(F);
-  $('ts-cap').innerHTML = '<strong>' + fmtUSD(parseFloat(state.hardCap) || F * 1.25) + '</strong> — <em>at the GP&rsquo;s sole discretion</em>';
-  $('ts-gpcommit').innerHTML = `${parseFloat(state.gpCommitPct).toFixed(1)}% / ${fmtUSD(m.gpCommit)}<span class="ts-note">funded in cash, pari passu with LPs; no fee waiver structuring</span>`;
-  $('ts-term').innerHTML = `<strong>${state.termYears} years</strong> from final close, plus <strong>two (2) one-year</strong> extensions at GP discretion, then one with LPAC consent`;
-  $('ts-ip').innerHTML = `<strong>${state.investmentPeriod} years</strong> from final close<span class="ts-note">may be terminated by 66.7% LP supermajority for cause</span>`;
-  $('ts-fee-ip').innerHTML = `<strong>${parseFloat(state.feeRateDuring).toFixed(2)}%</strong> per annum of <em>committed capital</em>, payable semi-annually in advance`;
+  $('ts-cap').textContent = fmtUSD(parseFloat(state.hardCap) || F * 1.25);
+  $('ts-gpcommit').textContent = `${parseFloat(state.gpCommitPct).toFixed(1)}% / ${fmtUSD(m.gpCommit)}`;
+  $('ts-term').textContent = `${state.termYears} years`;
+  $('ts-ip').textContent = `${state.investmentPeriod} years`;
+  $('ts-fee-ip').textContent = `${parseFloat(state.feeRateDuring).toFixed(2)}%`;
+  $('ts-fee-post').textContent = `${parseFloat(state.feeRateAfter).toFixed(2)}%`;
   const feeBaseLabel = state.feeBaseAfter === 'invested' ? 'invested cost' : 'committed capital';
-  $('ts-fee-post').innerHTML = `<strong>${parseFloat(state.feeRateAfter).toFixed(2)}%</strong> per annum of <em>${feeBaseLabel}</em>, reducing as portfolio is realized`;
+  $('ts-fee-base').textContent = feeBaseLabel;
   $('ts-org').textContent = fmtUSD(m.orgExpense);
   $('ts-org-pct').textContent = parseFloat(state.orgExpensePct).toFixed(2) + '%';
-  $('ts-pref').innerHTML = `<strong>${parseFloat(state.prefRate).toFixed(2)}%</strong> per annum, compounded annually, on contributed capital`;
+  $('ts-pref').textContent = `${parseFloat(state.prefRate).toFixed(2)}%`;
   $('ts-catchup').textContent = parseFloat(state.catchupRate).toFixed(0) + '%';
   $('ts-carry').textContent = parseFloat(state.carryRate).toFixed(1) + '%';
   const txOffset = parseFloat(state.transFeeOffset).toFixed(0);
   const txFeeP = parseFloat(state.transFeePct).toFixed(2);
-  $('ts-txfee').innerHTML = `${txOffset}% offset to the management fee${txFeeP > 0 ? '; transaction fees estimated at <strong>' + txFeeP + '%</strong> of deal cost' : ''}`;
+  $('ts-txfee').innerHTML = `${txOffset}% offset to the management fee${txFeeP > 0 ? `; transaction fees estimated at <strong>${txFeeP}%</strong> of deal cost` : ''}`;
 
   const wfType = m.waterfallType === 'american' ? 'American (deal-by-deal)' : 'European whole-of-fund';
   $('ts-wf-type').textContent = wfType;
@@ -5376,7 +6314,8 @@ function renderTermSheet(m) {
     : 'No clawback (pure American waterfall); carry distributed per deal without lookback';
 
   const recyclePct = parseFloat(state.recycling).toFixed(0);
-  $('ts-recycle').innerHTML = `<strong>${recyclePct}% of commitments</strong>&nbsp;— LPs&rsquo; aggregate capital called shall not exceed <strong>${(100 + parseFloat(recyclePct)).toFixed(0)}%</strong> of commitments`;
+  $('ts-recycle').textContent = `${recyclePct}% of commitments`;
+  $('ts-recycle-cap').textContent = `${(100 + parseFloat(recyclePct)).toFixed(0)}%`;
 
   const subMonths = parseFloat(state.subLineMonths).toFixed(0);
   $('ts-subline').innerHTML = subMonths > 0
@@ -5449,8 +6388,15 @@ function renderNAVSchedule(m) {
   $('m-girr').textContent = fmtPct(grossIrr);
   $('m-nirr').textContent = isFinite(m.lpIrr) ? fmtPct(m.lpIrr) : '—';
   $('m-nirr').className = 'metric-val ' + (m.lpIrr >= 0 ? 'pos' : 'neg');
-  $('m-trough').textContent = '−' + fmtMoic(nav.trough);
-  $('m-trough-foot').textContent = nav.troughYear ? `Trough at Y${nav.troughYear}` : 'No J-curve';
+  if (nav.trough > 0.001) {
+    $('m-trough').textContent = fmtMoic(1 - nav.trough);
+    $('m-trough').className = 'metric-val emph';
+    $('m-trough-foot').textContent = `TVPI bottom at Y${nav.troughYear} (depth ${(nav.trough*100).toFixed(1)}pp)`;
+  } else {
+    $('m-trough').textContent = '—';
+    $('m-trough').className = 'metric-val muted';
+    $('m-trough-foot').textContent = 'No drawdown below 1.0x';
+  }
   $('m-breakeven').textContent = nav.breakevenYear === '—' ? '—' : `Y${nav.breakevenYear}`;
 
   // NAV roll-forward table
@@ -5538,11 +6484,19 @@ function renderNAVSchedule(m) {
     $('rd-worst').textContent = fmtMoic(risk.worstMoic);
     $('rd-disp').textContent = risk.stdMoic.toFixed(2) + 'x';
   } else {
-    // Aggregate fallback
-    ['ia-platforms','ia-invested','ia-realcost','ia-realproc','ia-realmoic','ia-realrate',
-     'cc-top1','cc-top3','cc-top5','cc-avgcheck','cc-count',
+    // Aggregate fallback — show aggregate values where they're meaningful,
+    // and "deal-level only" where they require the portfolio
+    ['ia-realcost','ia-realrate',
+     'cc-top1','cc-top3','cc-top5','cc-avgcheck',
      'rd-losscap','rd-lossdeals','rd-winners','rd-best','rd-worst','rd-disp']
-      .forEach(id => { const el = $(id); if (el) el.textContent = '—'; });
+      .forEach(id => { const el = $(id); if (el) {
+        el.textContent = '—'; el.classList.add('muted');
+        if (el.parentElement) el.parentElement.title = 'Available in portfolio mode only';
+      }});
+    $('ia-platforms').textContent = 'agg.';
+    $('ia-platforms').classList.add('muted');
+    $('cc-count').textContent = 'agg.';
+    $('cc-count').classList.add('muted');
     $('ia-invested').textContent = fmtMM(m.totalInvested);
     $('ia-realproc').textContent = fmtMM(m.totalGrossProceeds);
     $('ia-realmoic').textContent = fmtMoic(m.grossMoic);
@@ -6111,8 +7065,8 @@ function renderBenchmarks(m) {
       else if (netIrr >= b.q3/100) { placement = `${fmtPct(netIrr)} — 3rd Quartile`; placementClass = ''; }
       else { placement = `${fmtPct(netIrr)} — Bottom Quartile`; placementClass = 'emph'; }
     }
-    vbBody.innerHTML += `<tr${isActive ? ' style="background:rgba(46,74,53,0.05);"' : ''}>
-      <td>${isActive ? '<strong>▶ ' : ''}${STRATEGY_LABELS[key] || key}${isActive ? '</strong>' : ''}</td>
+    vbBody.innerHTML += `<tr${isActive ? ' class="vb-active"' : ''}>
+      <td>${isActive ? '<strong>' : ''}${STRATEGY_LABELS[key] || key}${isActive ? '</strong>' : ''}</td>
       <td class="num pos">${b.q1.toFixed(1)}%</td>
       <td class="num">${b.med.toFixed(1)}%</td>
       <td class="num emph">${b.q3.toFixed(1)}%</td>
@@ -6148,7 +7102,7 @@ function renderRiskLab(m, opts) {
       <td class="num ${r.lpIrr >= 0 ? 'pos' : 'emph'}">${isFinite(r.lpIrr) ? fmtPct(r.lpIrr) : '—'}</td>
       <td class="num">${fmtMoic(r.navSchedule.finalDPI)}</td>
       <td class="num ${r.navSchedule.finalTVPI >= 1 ? 'pos' : 'emph'}">${fmtMoic(r.navSchedule.finalTVPI)}</td>
-      <td class="num muted">${r.navSchedule.trough > 0.001 ? '−' + fmtMoic(r.navSchedule.trough) : '—'}</td>
+      <td class="num muted">${r.navSchedule.trough > 0.001 ? fmtMoic(1 - r.navSchedule.trough) + ' @ Y' + r.navSchedule.troughYear : '—'}</td>
       <td class="num muted">${r.navSchedule.breakevenYear === '—' ? '—' : 'Y' + r.navSchedule.breakevenYear}</td>
       <td class="num emph">${fmtMM(r.gpTotal)}</td>
     </tr>`;
@@ -6374,7 +7328,10 @@ function bindInputs() {
         setTimeout(() => Object.values(charts).forEach(c => c && c.resize()), 50);
       }
       if (t.dataset.tab === 'metrics') {
-        setTimeout(() => { if (charts.jcurve) charts.jcurve.resize(); }, 50);
+        const m = computeModel(state);
+        applyAdvancedAdjustments(m);
+        renderNAVSchedule(m);
+        setTimeout(() => { if (charts.jcurve) charts.jcurve.resize(); }, 80);
       }
       if (t.dataset.tab === 'sensitivity') renderSensitivity();
       if (t.dataset.tab === 'benchmarks') {
